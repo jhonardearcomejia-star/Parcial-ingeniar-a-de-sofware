@@ -1,0 +1,39 @@
+Comando: git log --oneline --graph --all
+Capturado tras el commit 1059e19 y antes de añadir este archivo.
+
+* 1059e19 (pr/fix-parcial-3-review) fix: completa correcciones del parcial de EnvíaYa
+* 071a064 (HEAD -> main, origin/main, origin/HEAD) parte 4
+*   db3fbce (tag: v3.0.0) merge: release v3.0.0 hour peak surcharge
+|\
+| * c90eeff docs: document hour-peak impact and v3.0.0
+| * 789813f feat: agregar recargo de hora pico con hora requerida
+| * a8af125 test: definir casos de hora pico antes del cambio
+|/
+* 904cf9b (tag: v2.0.0) parte 7
+* e0055d6 si
+* d712542 si
+*   b020b14 merge: refactor/estrategia
+|\
+| * 0c7aca9 refactor: aplicar estrategia a los descuentos
+|/
+* 2d869d4 parte 6
+*   5d2dc0c merge: fix/DEF-02
+|\
+| * 605ba2d fix(DEF-02): validar zona
+|/
+*   22e0e7b merge: fix/DEF-01
+|\
+| * 4442b26 fix(DEF-01): peso máximo según PMAX
+|/
+* c8888ab si
+* e218c83 docs: salida de pytest y cobertura del código heredado
+*   359d996 merge: suite de pruebas
+|\
+| * 2548902 docs: registro de defectos y métricas
+| * 3a02bcb test: suite automatizada con 41 casos
+| * 5028b59 docs: diseño de casos de caja negra
+| * a5877e2 docs: historias completas y matriz de trazabilidad
+|/
+* becb44c docs: Plan de prueba
+* c072e5e docs: especificación e historias de usuario
+* 14eb8ef (tag: v1.0.0) chore: código heredado EnvíaYa v1.0.0 con CONFIG personalizado

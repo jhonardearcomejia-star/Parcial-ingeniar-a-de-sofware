@@ -1,0 +1,13 @@
+diff --git a/envios.py b/envios.py
+index 13b0f22..d6f51ec 100644
+--- a/envios.py
++++ b/envios.py
+@@ -14,6 +14,8 @@ CONFIG = {
+ def calc(p, z, c, d, cup=None, flag=False):
+     if p <= 0 or p > CONFIG["PMAX"]:
+         raise ValueError("peso invalido")
++    if cup is not None and cup != "ENVIO10":
++        raise ValueError("cupon invalido")
+     if d < 1 or d > 7:
+         raise ValueError("dia invalido")
+     if z not in ("urbana", "rural", "nacional"):

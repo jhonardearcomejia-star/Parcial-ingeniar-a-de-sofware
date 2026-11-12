@@ -1,0 +1,15 @@
+Parches de correccion DEF-01 a DEF-07 (aplicar en orden, partiendo del codigo heredado)
+
+Para cada defecto, desde ~/Documentos/envios_base con el entorno .venv activo:
+
+  git switch main
+  git switch -c fix/DEF-01
+  git apply parches/DEF-01.patch
+  pytest -q
+  git commit -am "fix(DEF-01): peso maximo segun PMAX"
+  git push -u origin fix/DEF-01
+  git switch main
+  git merge --no-ff fix/DEF-01 -m "merge: fix/DEF-01"
+  git push
+
+Fallas esperadas tras cada parche: 16, 15, 13, 10, 5, 3 y 0 (42 passed).

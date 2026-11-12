@@ -1,0 +1,10 @@
+diff --git a/envios.py b/envios.py
+index d6f51ec..9e70030 100644
+--- a/envios.py
++++ b/envios.py
+@@ -48,4 +48,4 @@ def calc(p, z, c, d, cup=None, flag=False):
+         t = 5000
+     if flag:
+         print("costo:", t)
+-    return int(t / 100) * 100
++    return int(round(t, 2) / 100 + 0.5) * 100

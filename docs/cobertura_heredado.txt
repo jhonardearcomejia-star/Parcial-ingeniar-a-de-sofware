@@ -1,0 +1,402 @@
+============================= test session starts ==============================
+platform linux -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0
+rootdir: /home/jhonardearco/Documentos/envios_base
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-7.1.0
+collected 42 items
+
+tests/test_envios.py .......F.....F..F.FF.F.FFFFF..FFFFFFF.....          [100%]
+
+=================================== FAILURES ===================================
+________________________________ test_calc[C08] ________________________________
+
+id_ = 'C08', p = 70, z = 'urbana', c = 'normal', d = 3, cup = None
+esperado = 57000
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_envios.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+p = 70, z = 'urbana', c = 'normal', d = 3, cup = None, flag = False
+
+    def calc(p, z, c, d, cup=None, flag=False):
+        if p <= 0 or p > 50:
+>           raise ValueError("peso invalido")
+E           ValueError: peso invalido
+
+envios.py:15: ValueError
+________________________________ test_calc[C14] ________________________________
+
+id_ = 'C14', p = 5, z = 'aerea', c = 'normal', d = 3, cup = None
+esperado = 'ERROR'
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_envios.py:68: Failed
+________________________________ test_calc[C17] ________________________________
+
+id_ = 'C17', p = 5, z = 'urbana', c = 'normal', d = 6, cup = None
+esperado = 11000
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 9000 == 11000
+E            +  where 9000 = calc(5, 'urbana', 'normal', 6, None)
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C19] ________________________________
+
+id_ = 'C19', p = 5, z = 'urbana', c = 'normal', d = 0, cup = None
+esperado = 'ERROR'
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_envios.py:68: Failed
+________________________________ test_calc[C20] ________________________________
+
+id_ = 'C20', p = 5, z = 'urbana', c = 'normal', d = 8, cup = None
+esperado = 'ERROR'
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_envios.py:68: Failed
+________________________________ test_calc[C22] ________________________________
+
+id_ = 'C22', p = 4, z = 'urbana', c = 'normal', d = 6, cup = None
+esperado = 11000
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 9000 == 11000
+E            +  where 9000 = calc(4, 'urbana', 'normal', 6, None)
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C24] ________________________________
+
+id_ = 'C24', p = 4, z = 'urbana', c = 'normal', d = 6, cup = 'ENVIO10'
+esperado = 9900
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 8100 == 9900
+E            +  where 8100 = calc(4, 'urbana', 'normal', 6, 'ENVIO10')
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C25] ________________________________
+
+id_ = 'C25', p = 4, z = 'urbana', c = 'frecuente', d = 2, cup = None
+esperado = 8600
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 8500 == 8600
+E            +  where 8500 = calc(4, 'urbana', 'frecuente', 2, None)
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C26] ________________________________
+
+id_ = 'C26', p = 4, z = 'urbana', c = 'frecuente', d = 6, cup = None
+esperado = 10500
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 8500 == 10500
+E            +  where 8500 = calc(4, 'urbana', 'frecuente', 6, None)
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C27] ________________________________
+
+id_ = 'C27', p = 4, z = 'urbana', c = 'frecuente', d = 2, cup = 'ENVIO10'
+esperado = 8100
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 7600 == 8100
+E            +  where 7600 = calc(4, 'urbana', 'frecuente', 2, 'ENVIO10')
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C28] ________________________________
+
+id_ = 'C28', p = 4, z = 'urbana', c = 'frecuente', d = 6, cup = 'ENVIO10'
+esperado = 9900
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 7600 == 9900
+E            +  where 7600 = calc(4, 'urbana', 'frecuente', 6, 'ENVIO10')
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C31] ________________________________
+
+id_ = 'C31', p = 4, z = 'urbana', c = 'vip', d = 2, cup = 'ENVIO10'
+esperado = 7200
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 6400 == 7200
+E            +  where 6400 = calc(4, 'urbana', 'vip', 2, 'ENVIO10')
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C32] ________________________________
+
+id_ = 'C32', p = 4, z = 'urbana', c = 'vip', d = 7, cup = 'ENVIO10'
+esperado = 8800
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 7900 == 8800
+E            +  where 7900 = calc(4, 'urbana', 'vip', 7, 'ENVIO10')
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C33] ________________________________
+
+id_ = 'C33', p = 4, z = 'urbana', c = 'normal', d = 2, cup = 'PROMO5'
+esperado = 'ERROR'
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_envios.py:68: Failed
+________________________________ test_calc[C34] ________________________________
+
+id_ = 'C34', p = 4, z = 'urbana', c = 'vip', d = 2, cup = 'PROMO5'
+esperado = 'ERROR'
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_envios.py:68: Failed
+________________________________ test_calc[C35] ________________________________
+
+id_ = 'C35', p = 10, z = 'rural', c = 'vip', d = 6, cup = 'ENVIO10'
+esperado = 10200
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 7700 == 10200
+E            +  where 7700 = calc(10, 'rural', 'vip', 6, 'ENVIO10')
+
+tests/test_envios.py:71: AssertionError
+________________________________ test_calc[C36] ________________________________
+
+id_ = 'C36', p = 70, z = 'nacional', c = 'normal', d = 7, cup = None
+esperado = 81800
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_envios.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+p = 70, z = 'nacional', c = 'normal', d = 7, cup = None, flag = False
+
+    def calc(p, z, c, d, cup=None, flag=False):
+        if p <= 0 or p > 50:
+>           raise ValueError("peso invalido")
+E           ValueError: peso invalido
+
+envios.py:15: ValueError
+________________________________ test_calc[C37] ________________________________
+
+id_ = 'C37', p = 12.5, z = 'rural', c = 'vip', d = 3, cup = None
+esperado = 10600
+
+    @pytest.mark.parametrize(
+        "id_, p, z, c, d, cup, esperado",
+        CASOS,
+        ids=[caso[0] for caso in CASOS],
+    )
+    def test_calc(id_, p, z, c, d, cup, esperado):
+        if esperado == "ERROR":
+            with pytest.raises(ValueError):
+                calc(p, z, c, d, cup)
+        else:
+>           assert calc(p, z, c, d, cup) == esperado
+E           AssertionError: assert 10500 == 10600
+E            +  where 10500 = calc(12.5, 'rural', 'vip', 3, None)
+
+tests/test_envios.py:71: AssertionError
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.14.7-final-0 ________________
+
+Name        Stmts   Miss Branch BrPart  Cover   Missing
+-------------------------------------------------------
+envios.py      29      0     26      0   100%
+-------------------------------------------------------
+TOTAL          29      0     26      0   100%
+=========================== short test summary info ============================
+FAILED tests/test_envios.py::test_calc[C08] - ValueError: peso invalido
+FAILED tests/test_envios.py::test_calc[C14] - Failed: DID NOT RAISE ValueError
+FAILED tests/test_envios.py::test_calc[C17] - AssertionError: assert 9000 == ...
+FAILED tests/test_envios.py::test_calc[C19] - Failed: DID NOT RAISE ValueError
+FAILED tests/test_envios.py::test_calc[C20] - Failed: DID NOT RAISE ValueError
+FAILED tests/test_envios.py::test_calc[C22] - AssertionError: assert 9000 == ...
+FAILED tests/test_envios.py::test_calc[C24] - AssertionError: assert 8100 == ...
+FAILED tests/test_envios.py::test_calc[C25] - AssertionError: assert 8500 == ...
+FAILED tests/test_envios.py::test_calc[C26] - AssertionError: assert 8500 == ...
+FAILED tests/test_envios.py::test_calc[C27] - AssertionError: assert 7600 == ...
+FAILED tests/test_envios.py::test_calc[C28] - AssertionError: assert 7600 == ...
+FAILED tests/test_envios.py::test_calc[C31] - AssertionError: assert 6400 == ...
+FAILED tests/test_envios.py::test_calc[C32] - AssertionError: assert 7900 == ...
+FAILED tests/test_envios.py::test_calc[C33] - Failed: DID NOT RAISE ValueError
+FAILED tests/test_envios.py::test_calc[C34] - Failed: DID NOT RAISE ValueError
+FAILED tests/test_envios.py::test_calc[C35] - AssertionError: assert 7700 == ...
+FAILED tests/test_envios.py::test_calc[C36] - ValueError: peso invalido
+FAILED tests/test_envios.py::test_calc[C37] - AssertionError: assert 10500 ==...
+======================== 18 failed, 24 passed in 0.52s =========================

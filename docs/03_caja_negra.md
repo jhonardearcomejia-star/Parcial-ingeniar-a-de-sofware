@@ -17,8 +17,8 @@ Orden de cálculo usado para todos los resultados esperados:
 | Peso (kg) | V1: 0 < p ≤ 2 (tramo 1) · V2: 2 < p ≤ 10 (tramo 2) · V3: 10 < p ≤ 70 (tramo 3) | I1: p ≤ 0 · I2: p > 70 |
 | Zona | V4: urbana · V5: rural · V6: nacional | I3: cualquier otra ("aerea") |
 | Cliente | V7: normal · V8: frecuente · V9: vip | (la especificación no define clientes inválidos; se anota como ambigüedad) |
-| Día | V10: 1–5 (hábil) · V11: 6 (sábado) · V12: 7 (domingo) | I4: d < 1 · I5: d > 7 |
-| Cupón | V13: ninguno · V14: ENVIO10 | I6: cupón inexistente ("PROMO5") |
+| Día | V10: enteros 1–5 (hábil) · V11: 6 (sábado) · V12: 7 (domingo) | I4: d < 1 · I5: d > 7 · I6: día fraccionario o booleano |
+| Cupón | V13: ninguno · V14: ENVIO10 | I7: cupón inexistente ("PROMO5") |
 
 ## 2. Valores límite del peso
 
@@ -31,7 +31,7 @@ Con D = 2 (par) el límite L1 está **incluido**: 2 kg pertenece al tramo 1.
 | L2 = 10 | 10 (tramo 2) · 10,01 (tramo 3) | C05, C06 |
 | PMAX = 70 | 70 (válido) · 70,01 (inválido) | C08, C09 |
 
-También se prueban los límites del día (0, 1, 5, 6, 7, 8) y del costo mínimo ($5.000).
+También se prueban los límites del día (0, 1, 5, 6, 7, 8), los tipos inválidos del día (6,5 y `True`) y el costo mínimo ($5.000).
 
 ## 3. Tabla de decisión: cliente × cupón × fin de semana
 
@@ -98,8 +98,10 @@ Ejemplo: paquete de 4 kg a zona urbana (tarifa base $9.000).
 | C39 | R8 | 1 kg · urbana · vip · día 3 · sin cupón | $5.000 | VL costo mínimo |
 | C40 | R6, R8 | 1 kg · urbana · vip · día 2 · ENVIO10 | $5.000 | VL costo mínimo |
 | C41 | R6, R8 | 2 kg · urbana · frecuente · día 3 · sin cupón | $5.700 | VL costo mínimo |
+| C42 | R2 | 5 kg · urbana · normal · día 6,5 · sin cupón | error (ValueError: día inválido) | PE: tipo inválido |
+| C43 | R2 | 5 kg · urbana · normal · día `True` · sin cupón | error (ValueError: día inválido) | PE: tipo inválido |
 
-Total: 41 casos. Técnicas: PE = partición de equivalencia, VL = valor límite, TD = tabla de decisión.
+Total: 43 casos. Técnicas: PE = partición de equivalencia, VL = valor límite, TD = tabla de decisión.
 
 ## 5. Cálculo paso a paso de casos representativos
 

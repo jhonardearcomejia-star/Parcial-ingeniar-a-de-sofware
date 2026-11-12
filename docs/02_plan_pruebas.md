@@ -1,10 +1,10 @@
-# Plan de pruebas · EnvíaYa · calc v1.0.0
+# Plan de pruebas · EnvíaYa · legado v1.0.0 y evolución v3.0.0
 
 Estudiante: Jhonar David De Arco Mejia · Código: 1029860263
 
 ## 1. Alcance
-**Dentro del alcance:** la función `calc(p, z, c, d, cup, flag)` de `envios.py`
-y las reglas R1–R8 con mis parámetros (PMAX=70, L1=2 incluido, L2=10,
+**Dentro del alcance:** la función heredada `calc(p, z, c, d, cup, flag)` y la función final `calc(peso, zona, cliente, dia, hora, cupón)` de `envios.py`,
+y las reglas R1–R9 con mis parámetros (PMAX=70, L1=2 incluido, L2=10,
 RR=20 %, RN=40 %, V=20 %, S=$2.000).
 **Fuera del alcance:** interfaz de usuario, base de datos, pagos, rendimiento
 y seguridad del sistema de EnvíaYa.
@@ -12,7 +12,7 @@ y seguridad del sistema de EnvíaYa.
 ## 2. Niveles de prueba aplicados a este caso
 | Nivel | Cómo se aplica en EnvíaYa | Evidencia |
 |---|---|---|
-| Unidad | `calc` se prueba aislada, con una regla por caso (por ejemplo, solo el límite de L1 o solo el recargo rural). | Casos de caja negra y caja blanca en pytest |
+| Unidad | `calc` se prueba aislada, con una regla por caso (por ejemplo, solo el límite de L1 o solo el recargo rural). También se prueban los tipos inválidos de día y la estrategia base. | Casos de caja negra y caja blanca en pytest |
 | Integración | `calc` combina CONFIG, tarifa, zona, fin de semana, descuentos y redondeo. Se prueban combinaciones (rural + sábado + vip + cupón). | Casos de la tabla de decisión |
 | Sistema | Una cotización completa de punta a punta, con entradas de un envío real, validando el valor final. | Casos de extremo a extremo y regresión |
 | Aceptación | El cliente (EnvíaYa) acepta si se cumplen los criterios Dado/Cuando/Entonces de HU-1, HU-2 y HU-3. | Criterios de las historias de usuario |
@@ -50,7 +50,7 @@ Arch Linux, Python 3.14, pytest 9.2, pytest-cov 7.1, Git y GitHub
 | Cliente desconocido o regla ambigua en la spec | Baja | Medio | Documentar la ambigüedad y asumir un criterio |
 
 ## 7. Criterios de entrada
-- Especificación R1–R8 aprobada y con mis valores.
+- Especificación R1–R9 aprobada y con mis valores.
 - CONFIG verificado contra mi código estudiantil.
 - Repositorio creado, etiqueta v1.0.0 y entorno con pytest instalado.
 - Casos de prueba diseñados y con resultados esperados calculados.

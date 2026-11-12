@@ -61,21 +61,33 @@ def validar_entradas(
 ) -> None:
     """Validar entradas según reglas R1, R2, R7 y R9.
 
-    R1: 0 < peso <= PESO_MAXIMO, si no, ValueError("peso invalido").
-    R2: zona debe ser urbana/rural/nacional, día entre 1 y 7, si no, ValueError.
+    R1: 0 < peso <= PESO_MAXIMO, si no, ValueError("peso inválido").
+    R2: zona debe ser urbana/rural/nacional y día entero entre 1 y 7.
     R7: cupón distinto de None y ENVIO10 -> ValueError("cupon invalido").
     R9: hora debe ser un entero entre 0 y 23.
     """
     if peso <= 0 or peso > PESO_MAXIMO:
-        raise ValueError("peso invalido")
+        raise ValueError("peso inválido")
     if zona not in ("urbana", "rural", "nacional"):
         raise ValueError("zona inválida")
-    if dia < 1 or dia > 7:
-        raise ValueError("día inválido")
-    if isinstance(hora, bool) or not isinstance(hora, int) or not 0 <= hora <= 23:
-        raise ValueError("hora inválida")
+    validar_dia(dia)
+    validar_hora(hora)
     if cupón is not None and cupón != "ENVIO10":
         raise ValueError("cupon invalido")
+
+
+def validar_dia(dia: int) -> None:
+    """R2: aceptar únicamente días enteros del 1 al 7."""
+    if isinstance(dia, bool) or not isinstance(dia, int):
+        raise ValueError("día inválido")
+    if not 1 <= dia <= 7:
+        raise ValueError("día inválido")
+
+
+def validar_hora(hora: int) -> None:
+    """R9: aceptar únicamente horas enteras del 0 al 23."""
+    if isinstance(hora, bool) or not isinstance(hora, int) or not 0 <= hora <= 23:
+        raise ValueError("hora inválida")
 
 
 def tarifa_base(peso: float) -> float:
@@ -157,7 +169,7 @@ def calc(
     """Calcular el costo de un envío.
 
     Función principal que orquesta las funciones validadoras y
-    de cálculo para aplicar todas las reglas R1-R8.
+    de cálculo para aplicar las reglas R1-R9.
 
     Parámetros:
         peso: en kg (puede tener decimales)

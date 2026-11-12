@@ -4,6 +4,12 @@ y versionado semántico ([SemVer](https://semver.org/lang/es/)).
 
 ## [Unreleased]
 
+### Fixed
+- R2 ahora rechaza días fraccionarios y booleanos; se añadió cobertura para ambos casos.
+- El error de peso inválido usa el mensaje especificado, con tilde.
+- Se corrigieron el grafo, los caminos independientes y la trazabilidad de R9 del informe.
+- Se añadió una prueba directa para la estrategia base y se actualizaron las métricas finales.
+
 ## [3.0.0] - 2026-11-11
 
 ### Added

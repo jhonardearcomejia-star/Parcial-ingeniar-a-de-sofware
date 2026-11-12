@@ -102,7 +102,7 @@ Se ejecutaron de nuevo las mismas pruebas de la Parte 5 (41 casos de la matriz y
 | Fallan | 18 | 0 |
 | % que pasan | 57,1 % | 100 % |
 
-Evidencia: `docs/pytest_regresion.txt` y captura `05_pytest_regresion_verde.png`.
+Evidencia textual: `docs/pytest_regresion.txt` conserva la ejecución de v2.0.0 y `docs/pytest_final.txt` la ejecución actual de v3.0.0. Las capturas reales de terminal están en `docs/evidencia_pytest_heredado.png` (fallos del legado) y `docs/evidencia_pytest_regresion.png` (regresión final y cobertura).
 
 ## 6. Comparación antes y después
 
@@ -117,23 +117,29 @@ Antes (v1.0.0 - código heredado):
 - Defectos conocidos: **7**
 
 Después (v2.0.0 - refactorizado):
-- Complejidad ciclomática de `calc`: **5** (repartida entre 6 funciones pequeñas: validar_entradas, tarifa_base, recargo_fin_de_semana, descuento_aplicable, redondear)
-- Complejidad máxima de una función: **5** (cada función tiene una responsabilidad única y sencilla)
-- Complejidad promedio por bloque: **5**
+- Complejidad ciclomática de `calc`: **2**
+- Complejidad máxima de una función: **8** (`validar_entradas`)
+- Complejidad promedio por bloque: **2,29** (14 bloques analizados)
 - Líneas de `envios.py`: **181** (líneas físicas totales incluyendo constantes, clases strategy, docstrings y firmas tipo Python; el objetivo no es acortar el archivo sino reducir la complejidad de cada función)
-- Cobertura de sentencias: **100 %** (69 de 69 sentencias ejecutadas; 1 línea faltando por diseño)
+- Cobertura de sentencias: **99 %** (68 de 69 sentencias; la línea 27 no se ejecuta en la suite de v2.0.0)
 - Cobertura de ramas: **100 %** (22 de 22 ramas ejecutadas)
 - Pruebas que pasan: **42 de 42 (100 %)**
 - Defectos conocidos: **0**
 - Densidad de defectos: **0 defectos por cada 100 líneas**
 
-Evidencia: ejecuciones de `pytest --cov=envios --cov-branch --cov-report=term-missing` y análisis con radon.
+Evidencia histórica de v2.0.0: `docs/pytest_regresion.txt`. La salida indica 68/69 sentencias (99 %) y 22/22 ramas (100 %); por eso el valor de sentencias no se reporta como 100 %. Las mediciones de complejidad de v1.0.0, v2.0.0 y v3.0.0 están en `docs/radon_complexity.txt`.
+
+### Estado final v3.0.0
+
+La validación de R2 ahora exige que `dia` sea un entero entre 1 y 7. También se alineó el texto de error de peso con R1 y se separaron las validaciones de día y hora. La suite final ejecuta **59 pruebas**: **59 pasan**, con **100 % de cobertura de sentencias (83/83) y ramas (28/28)**. La complejidad ciclomática de `calc` es 2, la máxima por función es 6 y el promedio de los 17 bloques analizados es 2,35.
+
+Evidencia reproducible: `docs/pytest_final.txt`, generado con `python -m pytest -q --cov=envios --cov-branch --cov-report=term-missing`.
 
 ### Análisis
 - Las líneas del archivo aumentan por las constantes nomencladas, las clases del patrón Estrategia y los docstrings. El objetivo del refactor no es acortar el archivo sino reducir la complejidad de cada función y facilitar su mantenimiento.
-- La complejidad de `calc` bajó de 15 a 5 porque las decisiones (validación, tramos, zona, descuento, redondeo) se repartieron entre funciones pequeñas y el patrón Estrategia.
+- La complejidad de `calc` bajó de 15 a 2 entre v1.0.0 y v2.0.0; la complejidad máxima por función bajó de 15 a 8. En v3.0.0 `calc` sigue en 2 y las validaciones separadas mantienen el máximo en 6.
 - La cobertura del 100 % ya existía con el código heredado, y aun así había 7 defectos. La cobertura mide qué líneas se ejecutan, no si el resultado es correcto. Los defectos se detectaron con resultados esperados calculados a mano sobre la especificación.
 - Se eliminó el argumento `flag` y el `print`, cambiando la firma pública de la función. Como esto es un cambio incompatible, la versión corresponde a **2.0.0** (MAJOR).
 
 ## 7. Conclusión
-Se corrigieron los 7 defectos, se eliminaron los malos olores identificados y se aplicó el patrón Estrategia a las zonas. La regresión muestra que las 42 pruebas pasan. Como se eliminó el argumento `flag` (cambio incompatible en la interfaz), la versión que corresponde es **2.0.0**.
+Se corrigieron los 7 defectos, se eliminaron los malos olores identificados y se aplicó el patrón Estrategia a las zonas. En v2.0.0 pasaron las 42 pruebas de esa etapa; en el estado final v3.0.0 pasan 59 pruebas con cobertura completa. Como se eliminó el argumento `flag` (cambio incompatible en la interfaz), la versión que corresponde a esa refactorización es **2.0.0**.

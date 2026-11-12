@@ -8,10 +8,10 @@ cupón inexistente = ERROR (F impar).
 Los resultados esperados se calcularon a mano a partir de la especificación
 (ver docs/03_caja_negra.md y docs/08_cambio.md), NO a partir del comportamiento del código.
 "ERROR" significa que se espera ValueError.
-Los 41 casos base usan hora=12 para mantener su resultado original.
+Los 43 casos base usan hora=12 para mantener su resultado original.
 """
 import pytest
-from envios import calc
+from envios import RecargoZona, calc
 
 CASOS = [
     # id,   peso, zona,      cliente,  día, cupón, esperado
@@ -56,6 +56,8 @@ CASOS = [
     ("C39", 1, 'urbana', 'vip', 3, None, 5000),
     ("C40", 1, 'urbana', 'vip', 2, 'ENVIO10', 5000),
     ("C41", 2, 'urbana', 'frecuente', 3, None, 5700),
+    ("C42", 5, 'urbana', 'normal', 6.5, None, 'ERROR'),
+    ("C43", 5, 'urbana', 'normal', True, None, 'ERROR'),
 ]
 
 
@@ -78,6 +80,16 @@ def test_flag_rechazado():
         calc(4, "urbana", "normal", 2, 12, None, flag=True)
 
 
+def test_error_peso_usa_el_mensaje_especificado():
+    with pytest.raises(ValueError, match="^peso inválido$"):
+        calc(0, "urbana", "normal", 3, 12)
+
+
+def test_estrategia_base_exige_una_implementacion():
+    with pytest.raises(NotImplementedError):
+        RecargoZona().aplicar(9000)
+
+
 @pytest.mark.parametrize(
     "hora, esperado",
     [
@@ -97,7 +109,7 @@ def test_recargo_hora_pico_en_limites(hora, esperado):
 
 
 @pytest.mark.parametrize(
-    "hora", [-1, 24, 17.5], ids=["HP-08", "HP-09", "HP-10"]
+    "hora", [-1, 24, 17.5, True], ids=["HP-08", "HP-09", "HP-10", "HP-13"]
 )
 def test_hora_fuera_de_rango_o_no_entera_es_invalida(hora):
     with pytest.raises(ValueError):

@@ -13,7 +13,7 @@ Estudiante: Jhonar David De Arco Mejia · Código: 1029860263
 | Requisito nuevo | R9: validar `hora` y aplicar el 8 % durante la franja de hora pico. |
 | Requisitos existentes | R4 determina la base porcentual tras el recargo de zona; R5 conserva el recargo fijo de fin de semana; R6 y R8 se ejecutan después y pueden cambiar el costo final redondeado. |
 | Historias | HU-2 amplía el cálculo de recargos; HU-3 conserva descuentos y redondeo para el nuevo costo; HU-4 añade criterios específicos de hora pico. |
-| Casos de prueba | Los 41 casos anteriores usan `hora=12`, fuera de la franja, y conservan sus resultados. HP-01 a HP-12 prueban límites, validación, recargo de zona y fin de semana. |
+| Casos de prueba | Los 43 casos base usan `hora=12`, fuera de la franja, y conservan sus resultados. HP-01 a HP-13 prueban límites, validación, recargo de zona y fin de semana. |
 | Código | `envios.py`: constante `RECARGO_HORA_PICO`, validación en `validar_entradas`, función `recargo_hora_pico` y nuevo parámetro obligatorio de `calc`. |
 | Interfaz | La firma cambia de `calc(peso, zona, cliente, dia, cupón=None)` a `calc(peso, zona, cliente, dia, hora, cupón=None)`; las llamadas existentes deben proporcionar hora. |
 
@@ -31,7 +31,7 @@ La solicitud exige que hora pico se calcule después de zona; se mantiene el rec
 
 ## Pruebas escritas primero
 
-Se añadieron primero los casos HP-01 a HP-12. Contra la función anterior, los 12 fallaron porque `calc` no aceptaba el parámetro `hora`; los 42 casos previos seguían pasando. Después de implementar el cambio y actualizar las llamadas existentes para usar `hora=12`, la regresión quedó en 54 aprobados.
+Se añadieron primero los casos HP-01 a HP-12. Contra la función anterior, los 12 fallaron porque `calc` no aceptaba el parámetro `hora`; los 42 casos previos seguían pasando. Después se agregó HP-13 para rechazar una hora booleana, dos casos de R2 para día no entero/booleano y pruebas para el mensaje de peso y la estrategia base. En el estado final, la regresión ejecuta 59 pruebas y todas pasan; la salida está en `docs/pytest_final.txt`.
 
 | ID | Entrada resumida | Cálculo / resultado esperado |
 |---|---|---|
@@ -47,6 +47,7 @@ Se añadieron primero los casos HP-01 a HP-12. Contra la función anterior, los 
 | HP-10 | Hora 17,5 | `ValueError`; la hora debe ser entera |
 | HP-11 | Rural, día hábil, hora 17 | $9.000 × 1,20 × 1,08 = $11.664 → $11.700 |
 | HP-12 | Rural, sábado, hora 17 | $9.000 × 1,20 × 1,08 + $2.000 = $13.664 → $13.700 |
+| HP-13 | Hora `True` | `ValueError`; un booleano no es una hora válida |
 
 ## Versión
 

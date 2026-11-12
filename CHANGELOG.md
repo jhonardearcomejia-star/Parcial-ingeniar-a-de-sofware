@@ -25,20 +25,6 @@ y versionado semántico ([SemVer](https://semver.org/lang/es/)).
 - DEF-06: Cupón inexistente lanza error en lugar de ignorarse
 - DEF-07: Redondeo al múltiplo de $100 más cercano ($50 hacia arriba)
 
-### Deprecated
-- Función `calc` con firma antigua (p, z, c, d, cup, flag)
-- Use `calc(peso, zona, cliente, dia, cupón=None)` en su lugar
-
-## [Unreleased]
-
-## [2.0.0] - AAAA-MM-DD
-
-### Fixed
-- Se valida la zona y el día del envío.
-- Se corrigen el recargo de sábado, los descuentos, los cupones y el redondeo.
-
-### Changed
-- Se refactorizó el cálculo usando el patrón Estrategia.
-
 ### Removed
-- Se eliminó el argumento `flag` de `calc`.
+- Se eliminó el argumento `flag` de la firma de `calc`
+- Se eliminó la función `calc` con firma antigua `p, z, c, d, cup, flag`

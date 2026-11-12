@@ -2,7 +2,8 @@
 
 Estudiante: Jhonar David De Arco Mejia · Código 1029860263
 
-- `envios.py`: código heredado v1.0.0 (CONFIG ya llenado).
+- `envios.py`: código refactorizado v2.0.0 (CONFIG actualizado).
+- Versión heredada v1.0.0 disponible con etiqueta v1.0.0.
 - `tests/`: pruebas (pytest). `docs/`: especificación, trazabilidad y defectos.
 - `CHANGELOG.md`: Keep a Changelog.
 

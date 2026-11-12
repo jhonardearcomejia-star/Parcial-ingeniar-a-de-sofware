@@ -1,0 +1,19 @@
+..........................................                               [100%]
+=============================== warnings summary ===============================
+../../../../usr/lib/python3.14/site-packages/anyio/pytest_plugin.py:14
+  /usr/lib/python3.14/site-packages/anyio/pytest_plugin.py:14: PytestRemovedIn10Warning: _pytest.python.CallSpec2 has been renamed to CallSpec.
+  The CallSpec2 alias will be removed in pytest 10.
+  Update imports to use CallSpec instead.
+  See https://docs.pytest.org/en/stable/deprecations.html#callspec2-renamed
+    from _pytest.python import CallSpec2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.14.7-final-0 ________________
+
+Name        Stmts   Miss Branch BrPart  Cover   Missing
+-------------------------------------------------------
+envios.py      69      1     22      0    99%   27
+-------------------------------------------------------
+TOTAL          69      1     22      0    99%
+42 passed, 1 warning in 0.24s

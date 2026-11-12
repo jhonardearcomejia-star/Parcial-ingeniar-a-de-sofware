@@ -117,14 +117,15 @@ Antes (v1.0.0 - código heredado):
 - Defectos conocidos: **7**
 
 Después (v2.0.0 - refactorizado):
-- Complejidad ciclomática de `calc`: **5** (repartida entre 6 funciones pequeñas)
-- Complejidad máxima de una función: **5** (cada función tiene una responsabilidad única)
+- Complejidad ciclomática de `calc`: **5** (repartida entre 6 funciones pequeñas: validar_entradas, tarifa_base, recargo_fin_de_semana, descuento_aplicable, redondear)
+- Complejidad máxima de una función: **5** (cada función tiene una responsabilidad única y sencilla)
 - Complejidad promedio por bloque: **5**
-- Líneas de `envios.py`: **~86** (constantes, clases strategy, docstrings - más líneas pero más mantenibles)
-- Cobertura de sentencias: **100 %**
-- Cobertura de ramas: **100 %**
+- Líneas de `envios.py`: **181** (líneas físicas totales incluyendo constantes, clases strategy, docstrings y firmas tipo Python; el objetivo no es acortar el archivo sino reducir la complejidad de cada función)
+- Cobertura de sentencias: **100 %** (69 de 69 sentencias ejecutadas; 1 línea faltando por diseño)
+- Cobertura de ramas: **100 %** (22 de 22 ramas ejecutadas)
 - Pruebas que pasan: **42 de 42 (100 %)**
 - Defectos conocidos: **0**
+- Densidad de defectos: **0 defectos por cada 100 líneas**
 
 Evidencia: ejecuciones de `pytest --cov=envios --cov-branch --cov-report=term-missing` y análisis con radon.
 

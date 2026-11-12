@@ -127,10 +127,11 @@ def redondear(tarifa: float) -> int:
 
     Los $50 redondean hacia arriba.
     Ejemplo: 8.550 -> 8.600, 7.200 -> 7.200, 10.240 -> 10.200
+
+    Se usa: tarifa + 50 // 100 * 100 para que los exactamente $50
+    roten hacia arriba (8550 -> 8600, 8450 -> 8500).
     """
-    # Usamos round para ir al múltiplo de 100 más cercano
-    # +0.5 para que los $50 roten hacia arriba
-    return int(round(tarifa / MULTIPLO_REDONDEO + 0.5) * MULTIPLO_REDONDEO)
+    return int((tarifa + MULTIPLO_REDONDEO // 2) // MULTIPLO_REDONDEO * MULTIPLO_REDONDEO)
 
 
 def calc(

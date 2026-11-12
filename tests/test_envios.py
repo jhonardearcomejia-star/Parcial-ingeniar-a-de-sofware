@@ -71,9 +71,7 @@ def test_calc(id_, p, z, c, d, cup, esperado):
         assert calc(p, z, c, d, cup) == esperado
 
 
-def test_flag_imprime_costo(capsys):
-    """Cubre la rama `if flag` del código heredado (argumento bandera)."""
-    resultado = calc(4, "urbana", "normal", 2, None, flag=True)
-    salida = capsys.readouterr().out
-    assert "costo:" in salida
-    assert resultado == 9000
+def test_flag_rechazado():
+    """Verifica que calc ya no acepta el argumento flag (cambio MAJOR)."""
+    with pytest.raises(TypeError):
+        calc(4, "urbana", "normal", 2, None, flag=True)

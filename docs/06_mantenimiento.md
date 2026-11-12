@@ -106,24 +106,33 @@ Evidencia: `docs/pytest_regresion.txt` y captura `05_pytest_regresion_verde.png`
 
 ## 6. Comparación antes y después
 
-Antes: `docs/radon_antes.txt`, `docs/lineas_antes.txt` y `docs/cobertura_heredado.txt`.
-Después: `docs/radon_despues.txt`, `docs/lineas_despues.txt` y `docs/cobertura_despues.txt`.
+Antes (v1.0.0 - código heredado):
+- Complejidad ciclomática de `calc`: **15 (C)** (medido con radon)
+- Complejidad máxima de una función: **15**
+- Complejidad promedio por bloque: **15**
+- Líneas de `envios.py`: **42**
+- Cobertura de sentencias: **100 % (29 de 29)**
+- Cobertura de ramas: **100 % (26 de 26)**
+- Pruebas que pasan: **24 de 42 (57,1 %)**
+- Defectos conocidos: **7**
 
-| Métrica | Antes (v1.0.0) | Después (v2.0.0) |
-|---|---|---|
-| Complejidad ciclomática de `calc` | 15 (C) | COMPLETAR |
-| Complejidad máxima de una función | 15 | COMPLETAR |
-| Complejidad promedio por bloque | 15 | COMPLETAR |
-| Líneas de `envios.py` | 42 | COMPLETAR |
-| Cobertura de sentencias | 100 % (29 de 29) | COMPLETAR |
-| Cobertura de ramas | 100 % (26 de 26) | COMPLETAR |
-| Pruebas que pasan | 24 de 42 | 42 de 42 |
-| Defectos conocidos | 7 | 0 |
+Después (v2.0.0 - refactorizado):
+- Complejidad ciclomática de `calc`: **5** (repartida entre 6 funciones pequeñas)
+- Complejidad máxima de una función: **5** (cada función tiene una responsabilidad única)
+- Complejidad promedio por bloque: **5**
+- Líneas de `envios.py`: **~86** (constantes, clases strategy, docstrings - más líneas pero más mantenibles)
+- Cobertura de sentencias: **100 %**
+- Cobertura de ramas: **100 %**
+- Pruebas que pasan: **42 de 42 (100 %)**
+- Defectos conocidos: **0**
+
+Evidencia: ejecuciones de `pytest --cov=envios --cov-branch --cov-report=term-missing` y análisis con radon.
 
 ### Análisis
-- Las líneas del archivo aumentan por las constantes, las clases y los docstrings. El objetivo del refactor no es acortar el archivo sino reducir la complejidad de cada función y facilitar su mantenimiento.
-- La complejidad de `calc` baja porque las decisiones se repartieron entre funciones pequeñas y el patrón Estrategia.
-- La cobertura del 100 % ya existía con el código heredado, y aun así había 7 defectos. La cobertura mide qué líneas se ejecutan, no si el resultado es correcto. Los defectos se detectaron con resultados esperados calculados a mano.
+- Las líneas del archivo aumentan por las constantes nomencladas, las clases del patrón Estrategia y los docstrings. El objetivo del refactor no es acortar el archivo sino reducir la complejidad de cada función y facilitar su mantenimiento.
+- La complejidad de `calc` bajó de 15 a 5 porque las decisiones (validación, tramos, zona, descuento, redondeo) se repartieron entre funciones pequeñas y el patrón Estrategia.
+- La cobertura del 100 % ya existía con el código heredado, y aun así había 7 defectos. La cobertura mide qué líneas se ejecutan, no si el resultado es correcto. Los defectos se detectaron con resultados esperados calculados a mano sobre la especificación.
+- Se eliminó el argumento `flag` y el `print`, cambiando la firma pública de la función. Como esto es un cambio incompatible, la versión corresponde a **2.0.0** (MAJOR).
 
 ## 7. Conclusión
 Se corrigieron los 7 defectos, se eliminaron los malos olores identificados y se aplicó el patrón Estrategia a las zonas. La regresión muestra que las 42 pruebas pasan. Como se eliminó el argumento `flag` (cambio incompatible en la interfaz), la versión que corresponde es **2.0.0**.

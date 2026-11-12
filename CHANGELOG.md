@@ -2,7 +2,17 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/)
 y versionado semántico ([SemVer](https://semver.org/lang/es/)).
 
-## [Sin publicar]
+## [Unreleased]
+
+## [3.0.0] - 2026-11-11
+
+### Added
+- Parámetro obligatorio `hora` (0–23) y recargo del 8 % de 17:00 a 19:00 inclusive.
+- Validación de hora y casos de prueba HP-01 a HP-12.
+
+### Changed
+- El recargo de hora pico se calcula después del recargo de zona y antes del recargo fijo de fin de semana.
+- La firma de `calc` ahora es `calc(peso, zona, cliente, dia, hora, cupón=None)`.
 
 ## [1.0.0] - 2026-11-11
 ### Added

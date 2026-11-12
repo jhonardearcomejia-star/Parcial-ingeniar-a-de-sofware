@@ -26,3 +26,12 @@ Parámetros: PMAX=70, L1=2 (incluido), L2=10, RR=20 %, RN=40 %, V=20 %, S=$2.000
 - **CA-1** Dado un cliente vip con el cupón ENVIO10 y un paquete de 4 kg a zona urbana en día hábil, cuando calculo el costo, entonces solo se aplica el 20 % y el costo es $7.200.
 - **CA-2** Dado el cupón "PROMO5" que no existe, cuando calculo el costo, entonces se lanza un error.
 - **CA-3** Dado un cliente frecuente con un paquete de 4 kg a zona urbana en día hábil, cuando calculo el costo, entonces el valor 8.550 se redondea hacia arriba y el resultado es $8.600.
+
+## HU-4 · Cobrar recargo de hora pico (R9)
+**Como** operador de EnvíaYa **quiero** que los envíos entre las 17:00 y las 19:00 tengan un recargo del 8 %
+**para** reflejar el costo de operar durante las horas de mayor demanda.
+
+- **CA-1** Dado un envío urbano de 4 kg a las 16:00, cuando calculo el costo, entonces no se aplica el recargo y el resultado es $9.000.
+- **CA-2** Dado un envío urbano de 4 kg a las 17:00 o 19:00, cuando calculo el costo, entonces se aplica el 8 % y el resultado redondeado es $9.700.
+- **CA-3** Dado un envío rural de 4 kg a las 17:00, cuando calculo el costo, entonces el 8 % se calcula después del 20 % de zona y el resultado es $11.700.
+- **CA-4** Dada una hora menor que 0, mayor que 23 o no entera, cuando calculo el costo, entonces se lanza `ValueError`.

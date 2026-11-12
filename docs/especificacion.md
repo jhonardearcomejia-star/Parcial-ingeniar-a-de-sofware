@@ -8,3 +8,4 @@
 - R6: frecuente 5 %, VIP 20 %, cupón ENVIO10 10 %; si hay cliente y cupón, solo el mayor.
 - R7: cupón inexistente -> error.
 - R8: mínimo $5.000; redondeo al múltiplo de $100 más cercano ($50 sube).
+- R9: `hora` debe ser un entero de 0 a 23. De 17 a 19 inclusive se agrega 8 % a la tarifa después del recargo de zona y antes del recargo fijo de fin de semana, descuentos, mínimo y redondeo.

@@ -6,8 +6,9 @@ solo el MAYOR descuento entre cliente y cupón (B par),
 cupón inexistente = ERROR (F impar).
 
 Los resultados esperados se calcularon a mano a partir de la especificación
-(ver docs/03_caja_negra.md), NO a partir del comportamiento del código.
+(ver docs/03_caja_negra.md y docs/08_cambio.md), NO a partir del comportamiento del código.
 "ERROR" significa que se espera ValueError.
+Los 41 casos base usan hora=12 para mantener su resultado original.
 """
 import pytest
 from envios import calc
@@ -66,12 +67,48 @@ CASOS = [
 def test_calc(id_, p, z, c, d, cup, esperado):
     if esperado == "ERROR":
         with pytest.raises(ValueError):
-            calc(p, z, c, d, cup)
+            calc(p, z, c, d, 12, cup)
     else:
-        assert calc(p, z, c, d, cup) == esperado
+        assert calc(p, z, c, d, 12, cup) == esperado
 
 
 def test_flag_rechazado():
     """Verifica que calc ya no acepta el argumento flag (cambio MAJOR)."""
     with pytest.raises(TypeError):
-        calc(4, "urbana", "normal", 2, None, flag=True)
+        calc(4, "urbana", "normal", 2, 12, None, flag=True)
+
+
+@pytest.mark.parametrize(
+    "hora, esperado",
+    [
+        (0, 9000),
+        (16, 9000),
+        (17, 9700),
+        (18, 9700),
+        (19, 9700),
+        (20, 9000),
+        (23, 9000),
+    ],
+    ids=["HP-01", "HP-02", "HP-03", "HP-04", "HP-05", "HP-06", "HP-07"],
+)
+def test_recargo_hora_pico_en_limites(hora, esperado):
+    """El 8 % aplica solo entre 17 y 19, inclusive."""
+    assert calc(4, "urbana", "normal", 3, hora=hora) == esperado
+
+
+@pytest.mark.parametrize(
+    "hora", [-1, 24, 17.5], ids=["HP-08", "HP-09", "HP-10"]
+)
+def test_hora_fuera_de_rango_o_no_entera_es_invalida(hora):
+    with pytest.raises(ValueError):
+        calc(4, "urbana", "normal", 3, hora=hora)
+
+
+def test_HP_11_hora_pico_se_calcula_despues_del_recargo_de_zona():
+    # $9.000 × 1,20 × 1,08 = $11.664 → $11.700
+    assert calc(4, "rural", "normal", 3, hora=17) == 11700
+
+
+def test_HP_12_hora_pico_va_antes_del_recargo_fijo_de_fin_de_semana():
+    # ($9.000 × 1,20 × 1,08) + $2.000 = $13.664 → $13.700
+    assert calc(4, "rural", "normal", 6, hora=17) == 13700

@@ -1,5 +1,5 @@
 # envios.py
-# Código refactorizado · versión 2.0.0
+# Código evolucionado · versión 3.0.0
 
 
 # Constantes con nombre (reemplazo de números mágicos)
@@ -11,6 +11,7 @@ TARIFA_TRAMO_2 = 9_000
 PRECIO_KG_EXTRA = 800
 RECARGO_RURAL = 0.20
 RECARGO_NACIONAL = 0.40
+RECARGO_HORA_PICO = 0.08
 RECARGO_FIN_DE_SEMANA = 2_000
 DESCUENTO_FRECUENTE = 0.05
 DESCUENTO_VIP = 0.20
@@ -55,13 +56,15 @@ def validar_entradas(
     zona: str,
     cliente: str,
     dia: int,
+    hora: int,
     cupón: str | None,
 ) -> None:
-    """Validar entradas según reglas R1, R2 y R7.
+    """Validar entradas según reglas R1, R2, R7 y R9.
 
     R1: 0 < peso <= PESO_MAXIMO, si no, ValueError("peso invalido").
     R2: zona debe ser urbana/rural/nacional, día entre 1 y 7, si no, ValueError.
     R7: cupón distinto de None y ENVIO10 -> ValueError("cupon invalido").
+    R9: hora debe ser un entero entre 0 y 23.
     """
     if peso <= 0 or peso > PESO_MAXIMO:
         raise ValueError("peso invalido")
@@ -69,6 +72,8 @@ def validar_entradas(
         raise ValueError("zona inválida")
     if dia < 1 or dia > 7:
         raise ValueError("día inválido")
+    if isinstance(hora, bool) or not isinstance(hora, int) or not 0 <= hora <= 23:
+        raise ValueError("hora inválida")
     if cupón is not None and cupón != "ENVIO10":
         raise ValueError("cupon invalido")
 
@@ -96,6 +101,13 @@ def recargo_fin_de_semana(dia: int, tarifa: float) -> float:
     """
     if dia >= 6:  # sábado (6) o domingo (7)
         return tarifa + RECARGO_FIN_DE_SEMANA
+    return tarifa
+
+
+def recargo_hora_pico(hora: int, tarifa: float) -> float:
+    """Regla R9: aplicar 8 % entre las 17:00 y las 19:00, inclusive."""
+    if 17 <= hora <= 19:
+        return tarifa + tarifa * RECARGO_HORA_PICO
     return tarifa
 
 
@@ -139,6 +151,7 @@ def calc(
     zona: str,
     cliente: str,
     dia: int,
+    hora: int,
     cupón: str | None = None,
 ) -> int:
     """Calcular el costo de un envío.
@@ -151,6 +164,7 @@ def calc(
         zona: urbana, rural o nacional
         cliente: normal, frecuente o vip
         dia: de 1 a 7 (6=sábado, 7=domingo)
+        hora: entero de 0 a 23
         cupón: opcional, solo "ENVIO10" es válido
 
     Retorna:
@@ -158,7 +172,7 @@ def calc(
         con un mínimo de $5.000.
     """
     # 1. Validar entradas
-    validar_entradas(peso, zona, cliente, dia, cupón)
+    validar_entradas(peso, zona, cliente, dia, hora, cupón)
 
     # 2. Tarifa base
     t = tarifa_base(peso)
@@ -167,16 +181,19 @@ def calc(
     estrategia = ZONAS[zona]
     t = estrategia.aplicar(t)
 
-    # 4. Recargo de fin de semana (antes de descuentos al E par)
+    # 4. Hora pico: se calcula después del recargo de zona.
+    t = recargo_hora_pico(hora, t)
+
+    # 5. Recargo de fin de semana (antes de descuentos al E par)
     t = recargo_fin_de_semana(dia, t)
 
-    # 5. Descuento de cliente y cupón (solo el mayor)
+    # 6. Descuento de cliente y cupón (solo el mayor)
     desc = descuento_aplicable(cliente, cupón)
     t = t - t * desc
 
-    # 6. Mínimo $5.000
+    # 7. Mínimo $5.000
     if t < COSTO_MINIMO:
         t = COSTO_MINIMO
 
-    # 7. Redondeo final
+    # 8. Redondeo final
     return redondear(t)

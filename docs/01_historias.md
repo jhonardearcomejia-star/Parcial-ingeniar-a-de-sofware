@@ -10,6 +10,7 @@ Parámetros: PMAX=70, L1=2 (incluido), L2=10, RR=20 %, RN=40 %, V=20 %, S=$2.000
 - **CA-1** Dado un paquete de 70,01 kg, cuando calculo el costo, entonces se lanza el error "peso inválido".
 - **CA-2** Dado un envío a la zona "aerea", cuando calculo el costo, entonces se lanza un error.
 - **CA-3** Dado el día 8, cuando calculo el costo, entonces se lanza un error.
+- **CA-4** Dado un día fraccionario o booleano, cuando calculo el costo, entonces se lanza un error porque el día debe ser un entero de 1 a 7.
 
 ## HU-2 · Calcular tarifa base y recargos (R3, R4, R5)
 **Como** operador de EnvíaYa **quiero** que el costo parta de la tarifa por peso y sume los recargos de zona y de fin de semana

@@ -14,6 +14,8 @@ CONFIG = {
 def calc(p, z, c, d, cup=None, flag=False):
     if p <= 0 or p > CONFIG["PMAX"]:
         raise ValueError("peso invalido")
+    if z not in ("urbana", "rural", "nacional"):
+        raise ValueError("zona inválida")
     if p <= CONFIG["L1"]:
         t = 6000
     elif p <= CONFIG["L2"]:
